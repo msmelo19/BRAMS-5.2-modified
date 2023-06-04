@@ -1,0 +1,613 @@
+# File used to control a run of the JULES code.
+# The format of this file is described in the documentation.
+#
+# This example does a 1 year run at a single point, using the Loobos data.
+# This is intended to be a test of the code, so that users can compare with
+# a set of standard results - it is not necessarily the best set up for users
+# who are interested in modelling the Loobos site.
+################################################################################
+
+## Model options.
+>INIT_OPTS
+
+5,4       !   npft,nnvg
+F         !   l_aggregate
+
+'BT', 'NT', 'C3G', 'C4G','shrub'   !  pftName
+'urban', 'lake', 'soil', 'ice'     !  nvgName 
+
+1,1       !   nxIn,nyIn   -  !DSM Nao utilizado: lendo no RAMSIN
+7         !   sm_levels   -  !DSM Nao utilizado: lendo no RAMSIN
+0         !   nsmax
+3         !   can_model
+5,10      !   can_rad_mod,ilayers
+T,T       !   l_cosz,l_spec_albedo
+F,F,F,F   !   l_phenol,l_triffid,l_veg_compete,l_trif_eq
+F,F       !   l_top,l_pdm
+F,F       !   l_anthrop_heat_src,l_moruses
+F         !   l_o3_damage
+F         !   l_imogen
+F,F       !   l_epot_corr,l_snowdep_surf
+
+0         !   i_scrn_t_diag
+
+F         !   yrevIn
+'gswp2'   !   ncType
+F         !   echo
+48        !   print_step
+
+################################################################################
+
+## Date and time information
+>INIT_TIME
+
+1800                   !  timestep !DSM Nao utilizado: lendo no RAMSIN
+19961231,'23:00:00'    !  start date and time (dateMainRun,timeRun) !DSM Nao utilizado: lendo no RAMSIN
+19971231,'23:00:00'    !  end date and time
+
+F                      !  l_360
+1,1                   !  phenol_period,triffid_period
+
+19961231,19971231,0    !  dateSpin,nspin   !DSM nspin deve ser 0 (zero)
+F                      !  terminate run if spin-up fails (T,F)
+
+>VARS
+smcl    F  1.0         !  variable name,spinTolPercent,spinTol
+t_soil  F  0.1  
+>ENDVARS
+
+
+################################################################################
+
+## Model grid and points to use.
+>INIT_GRID
+
+F,F,F                 !  pointsList,coord,coordLL
+F                     !  landOnly
+F,F     1             !  subArea,subAreaLatLon
+2,5,1,4               !  xcoord(1:2),ycoord(1:2)
+1                     !  npoints
+
+F                     !  readFilePoints
+'input/mask.dat'      !  fileNamePoints
+
+################################################################################
+
+# Land fraction.
+>INIT_LAND
+T                     !  readFileLand
+'bin'                 !  fileFormatLand
+'input/mask.dat'      !  fileNameLand    !DSM Nao utilizado: lendo do arquivo do BRAMS
+
+>ASCBIN
+0,0                   !  nheaderFileLand,nheaderFieldLand   !DSM Nao utilizado: lendo do arquivo do BRAMS
+1                     !  fieldLand   !DSM Nao utilizado: lendo do arquivo do BRAMS
+
+>NC
+'lfrac'               !  varNameLand
+
+################################################################################
+
+# Latitude and longitude of points.
+>INIT_LATLON
+F                          !  regLatLon  !DSM deve ser sempre F
+52.168, 5.744              !  regLat1,regLon1
+1.0,1.0                    !  regDlat,regDlon
+
+T                          !  readFile
+'nc'                      !  fileFormat
+'input/latlon.dat'         !  fileName   !DSM Nao utilizado: lendo do arquivo do BRAMS
+
+>ASCBIN
+0,0               !  nheaderFile,nheaderField   !DSM Nao utilizado: lendo do arquivo do BRAMS
+1,2               !  fieldLat,fieldLon   !DSM Nao utilizado: lendo do arquivo do BRAMS
+
+>NC
+'lat','lon'       !  varNameLat,varNameLon
+
+################################################################################
+# Data for points, land fraction and lat/lon.
+
+>DATA_POINTS
+1                     !  mapIn
+
+>DATA_LAND
+1.0                   !  flandg
+
+>DATA_LATLON
+52.168   ! lat
+5.744    ! lon
+
+###############################################################################
+## Fractional cover.
+>INIT_FRAC
+F                         !  readFracIC 
+T                         !  readFile
+'bin'                     !  fileFormat
+'input/frac.dat'          !  fileName          !DSM Nao utilizado: lendo do arquivo do BRAMS
+
+>ASCBIN
+0,0                 !  nheaderFile,nheaderField
+1                   !  fieldNum
+
+>NC
+'frac'              !  varName
+
+# Data fields to be read from this file should appear below here.
+>DATA
+0.355, 0.355, 0.208, 0.0, 0.0, 0.0, 0.0, 0.082, 0.0   !  frac(:,:)
+
+################################################################################
+## Soil layer details, including hydraulic and thermal characteristics, and albedo.
+>INIT_SOIL
+
+F       !  l_vg_soil
+F       !  l_soil_sat_down
+T       !  l_q10
+1       !  soilhc_method
+
+F       !  useSoilType
+F,F     !  constZ,zrev
+T                     !  readFile
+'bin'                 !  fileFormat
+'input/soil.dat'      !  fileName
+'input/soil_lut.txt'  !  soilLUTfile (look-up table file)
+
+>ASCBIN
+0,0                   !  nheaderFile,nheaderField
+>VARS
+b         1         !  name,field number
+sathh     2
+satcon    3
+sm_sat    4
+sm_crit   5
+sm_wilt   6
+hcap      7
+hcon      8
+albsoil   9
+>ENDVARS
+
+>NC
+>VARS
+b         b_exp      !  name,name of SDF variable
+sathh     sathh 
+satcon    satcon 
+sm_sat    sat 
+sm_crit   crit 
+sm_wilt   wilt 
+hcap      hcap 
+hcon      hcon
+albsoil   albsoil
+>ENDVARS
+
+>DATA_DZSOIL
+0.1, 0.25, 0.65, 1.25, 2.0 ,3.0 ,5.0  !  dzsoil(1:sm_levels)          !DSM Nao utilizado: lendo no RAMSIN
+0.15                   !  albSoilConst
+
+# Data fields to be read from this file should appear below here.
+>DATA
+    6.63,     6.63,     6.63,     6.63,       6.63, !  b or 1/(n-1)   !DSM Nao utilizado: lendo do arquivo do BRAMS
+0.049460, 0.049460, 0.049460, 0.049460,   0.049460, !  sathh          !DSM Nao utilizado: lendo do arquivo do BRAMS
+0.004715, 0.004715, 0.004715, 0.004715,   0.004715, !  satcon         !DSM Nao utilizado: lendo do arquivo do BRAMS
+0.458150, 0.458150, 0.458150, 0.458150,   0.458150, !  smvcst         !DSM Nao utilizado: lendo do arquivo do BRAMS
+0.242433, 0.242433, 0.242433, 0.242433,   0.242433, !  smvccl         !DSM Nao utilizado: lendo do arquivo do BRAMS
+0.136328, 0.136328, 0.136328, 0.136328,   0.136328, !  smvcwt         !DSM Nao utilizado: lendo do arquivo do BRAMS
+1185676., 1185676., 1185676., 1185676.,   1185676., !  hcap           !DSM Nao utilizado: lendo do arquivo do BRAMS
+0.226873, 0.226873, 0.226873, 0.226873,   0.226873, !  hcon           !DSM Nao utilizado: lendo do arquivo do BRAMS
+0.110000                               !  albsoil
+
+################################################################################
+## TOPMODEL parameters
+>INIT_TOP
+5.0                   !  zw_max
+10.0                  !  ti_max
+2.0                   !  ti_wetl
+
+F                     !  readFile
+'asc'                 !  fileFormat
+'input/top.dat'       !  fileName
+
+>ASCBIN
+0,0                   !  nheaderFile,nheaderField
+>VARS
+fexp        -1  3.0   !   varName,varFlag,constVal
+ti_mean      1  0.0
+ti_sig       2  0.0
+>ENDVARS
+
+>NC
+>VARS
+fexp         1  0.0  fexp      !  varName,varFlag,constVal,SDF varname
+ti_mean      1  0.0  ti_mean
+ti_sig       1  0.0  ti_sig
+>ENDVARS
+
+>DATA
+10.0   !  ti_mean
+1.0    !  ti_sig
+
+################################################################################
+## PDM parameters
+>INIT_PDM
+1.0    !  dz_pdm
+1.0    !  b_pdm
+
+################################################################################
+## Tile surface heights (relative to gridbox average).
+>INIT_HGT
+
+T                     !  zeroHeight
+
+F                     !  readFile
+'asc'                 !  fileFormat
+'input/surf_hgt.dat'  !  fileName
+
+>ASCBIN
+0,0                   !  nheaderFile,nheaderField
+1                     !  fieldHgt
+
+>NC
+'surf_hgt'            !  varName
+
+>DATA
+9*0.0   !  surf_hgt
+
+################################################################################
+# PFT parameters
+>INIT_VEG_PFT
+
+F                                   !  readFile
+'PARAM/standard_pft_param.dat'      !  fileName
+5                                   !  npftInFile
+
+# Data fields to be read from this file should appear below here.
+>DATA
+    'BT',  'NT','C3G', 'C4G','shrub'    !  pftName 
+      1,     1,     1,     0,     1     !  c3
+  19.01, 16.38,  0.79,  1.26,  1.00     !  canht_ft
+    5.0,   4.0,   2.0,   4.0,   1.0     !  lai
+   0.50,  0.50,  0.50,  0.50,  0.50     !  catch0
+   0.05,  0.05,  0.05,  0.05,  0.05     !  dcatch_dlai
+   0.25,  0.25,  0.30,  0.30,  0.30     !  dz0v_dh  
+    0.1,   0.1,   0.1,   0.1,   0.1     !  z0h_z0m
+   4.00,  4.00,  2.00,  2.00,  2.00     !  infil_f
+   5.00,  1.00,  0.50,  0.50,  0.50     !  rootd_ft
+      0,     1,     0,     0,     0     !  snowCanPFT
+   0.15,  0.15,  0.60,  0.60,  0.40     !  albsnc_max
+   0.30,  0.30,  0.80,  0.80,  0.80     !  albsnc_min
+   0.10,  0.10,  0.20,  0.20,  0.20     !  albsnf_max
+   0.50,  0.50,  0.50,  0.50,  0.50     !  kext
+   0.50,  0.50,  0.50,  0.50,  0.50     !  kpar
+      0,     0,     0,     0,     0     !  orient
+   0.08,  0.08,  0.12, 0.060,  0.08     !  alpha
+   0.45,  0.35,  0.58,  0.58,  0.58     !  alnir
+   0.10,  0.07,  0.10,  0.10,  0.10     !  alpar
+   0.15,  0.15,  0.15,  0.17,  0.15     !  omega
+   0.70,  0.45,  0.83,  0.83,  0.83     !  omnir
+   0.65,  0.65, 0.005, 0.005,  0.10     !  a_wl
+  10.00, 10.00,  1.00,  1.00, 10.00     !  a_ws
+  1.667, 1.667, 1.667, 1.667, 1.667     !  b_wl
+   0.01,  0.01,  0.01,  0.01,  0.01     !  eta_sl
+   0.25,  0.25,  0.25,  0.25,  0.25     !  g_leaf_0
+    0.0,   0.0,   0.0,   0.0,   0.0     !  dgl_dm
+    9.0,   9.0,   9.0,   9.0,   9.0     !  dgl_dt
+ 1.0E-6,1.0E-6,1.0E-6,1.0E-6,1.0E-6     !  glmin
+  0.090, 0.060, 0.100, 0.075, 0.100     !  dqcrit
+  0.015, 0.015, 0.015, 0.025, 0.015     !  fd
+  0.875, 0.875, 0.900, 0.800, 0.900     !  f0
+   0.00,  0.00,  0.00,  0.00,  0.00     !  fsmc_of
+ 0.8e-3,0.8e-3,0.8e-3,0.4e-3,0.8e-3     !  neff
+  0.046, 0.033, 0.073, 0.060, 0.060     !  nl0
+   1.00,  1.00,  1.00,  1.00,  1.00     !  nr_nl
+   0.10,  0.10,  1.00,  1.00,  0.10     !  ns_nl
+   0.25,  0.25,  0.25,  0.25,  0.25     !  r_grow
+ 0.0375,0.1000,0.0250,0.0500,0.0500     !  sigl
+ 278.15,233.15,278.15,278.15,233.15     !  tleaf_of
+    0.0, -10.0,   0.0,  13.0,   0.0     !  tlow
+   36.0,  31.0,  36.0,  45.0,  36.0     !  tupp
+   1.00,  1.00,  1.00,  1.00,  1.00     !  emis_pft
+    1.6,   1.6,    5.,    5.,   1.6     !  fl_o3_ct
+   0.04,  0.02,  0.25,  0.13,  0.03     !  dfp_dcuo
+   
+
+###############################################################################
+# Vegetation (PFT) parameters that vary with time and/or location.
+>INIT_VEG_VARY
+
+0                                  !  nvegVar
+3600,0                             !  vegDataPer, vegUpdatePer
+1,-1                               !  nvegFileTime, vegFilePer
+F                                  !  vegClim
+F                                  !  readList
+'input/lai_canht_oneline_1.dat'    !  file name
+19970101,'00:00:00'                !  vegFileDate(1),vegFileTime(1)
+F                                  !  vegEndTime
+'nc'                               !  fileFormat
+
+>ASCBIN
+18                                 !  nfieldVegFile
+1,2,0                              !  nvegHeaderFile,nvegHeaderTime,nvegHeaderField
+T                                  !  noNewLineVeg
+'lai',   't', 6, 'nf', 'laifile'   !  name,flag,field number,interpolation type, name  used in file name
+
+>NC
+'lai', 't', 'nf', 'lai', 'laifile' !  name,flag,interpolation type,name of netCDF variable,name  used in file name
+
+
+################################################################################
+# Non-veg parameters
+>INIT_NONVEG
+F                                      !   readFile
+'PARAM/standard_nonveg_param.dat'      !   fileName
+4                                      !   nnvgInFile
+
+# Data fields to be read from this file should appear below here.
+>DATA
+'urban',  'lake', 'soil', 'ice'   !  nvgName 
+   0.40,    0.80,   0.80,  0.80  !  albsnc_nvg
+   0.18,    0.06,  -1.00,  0.75  !  albsnf_nvg
+   0.50,    0.00,   0.00,  0.00  !  catch_nvg
+   0.00,    0.00,   1E-2,   1E6  !  gs_nvg
+   0.10,    0.00,   0.50,  0.00  !  infil_nvg
+   3.00,    3E-4,   3E-4,  1E-4  !  z0_nvg
+    0.1,     0.1,    0.1,   0.1  !  z0h_z0m
+  0.28E6, 2.11e7,   0.00,  0.00  !  ch_nvg
+   1.00,    1.00,   0.00,  0.00  !  vf_nvg
+   1.00,    1.00,   1.00,  1.00  !  emis_nvg
+
+################################################################################
+# Urban parameters
+>INIT_URBAN
+
+T,T                !   l_urban_empirical,l_moruses_macdonald
+T,T,T              !   l_moruses_albedo,l_moruses_emissivity,l_moruses_rough
+T,T                !   l_moruses_storage,l_moruses_storage_thin
+
+1.0                !   anthrop_heat_scale
+
+F                        !   readFile
+'asc'                    !   fileFormat
+'moruses_example_1d.dat     !   fileName
+
+>ASCBIN
+0,0                      !  nheaderFile,nheaderField
+>VARS
+wrr      1   0.5         !  varName,varFlag,constVal
+hwr      2   1.0
+hgt      3  10.0
+ztm      4   1.0
+disp     5   5.0
+albwl    6   0.375
+albrd    7   0.08
+emisw    8   0.875
+emisr    9   0.95
+>ENDVARS
+
+>NC
+>VARS
+wrr     -1   0.5     wrr    !  varName,varFlag,constVal,SDF varname
+hwr     -1   1.0     hwr
+hgt     -1  10.0     hgt
+ztm     -1   1.0     ztm
+disp    -1   5.0     disp
+albwl   -1   0.375   albwl
+albrd   -1   0.08    albrd
+emisw   -1   0.875   emisw
+emisr   -1   0.95    emisr
+>ENDVARS
+
+# Data fields for MORUSES to be read from this file should appear below here.
+# This will always be read, but overwritten if using parametrisation
+>DATA
+ 0.5              ! wrr:   Width ratio/ canyon fraction (also used by URBAN-2T)
+ 1.0              ! hwr:   Height-to-width ratio
+10.0              ! hgt:   Building height
+ 3.0              ! ztm:   Roughness length
+ 5.0              ! disp:  Displacement height
+ 0.375            ! albwl: Albedo wall
+ 0.08             ! albrd: Albedo road
+ 0.875            ! emisw: Emissivity wall
+ 0.95             ! emisr: Emissivity road
+
+################################################################################
+## Snow parameters
+>INIT_SNOW
+ 0.1, 0.2, 0.2         !  dzsnow
+ 250.0,                !  rho_snow
+ 0.63e6,  0.265        !  snow_hcap,snow_hcon
+ 0.05                  !  snowliqcap
+ 50.0, 2000.0          !  r0,rmax
+ 0.6, 0.06, 0.23e6     !  snow_ggr(1:3)
+ 0.98, 0.7             !  amax(1:2) 
+ 2.0,  0.3             !  dtland,kland (incl. dtland in denominator)
+ 50.0                  !  maskd
+ 4.4, 0.7, 0.4         !  snowLoadLAI,snowInterceptFact,snowUnloadFact 
+################################################################################
+## TRIFFID parameters.
+>INIT_TRIF
+F                                      !    readFile
+'PARAM/standard_trif_param.dat'        !    fileName
+5                                      !    npftInFile
+
+# Data fields to be read from this file should appear below here.
+>DATA
+    'BT',  'NT','C3G', 'C4G','shrub'    !  trifName 
+      0,     0,     1,     1,     0     !  crop
+  0.005, 0.007,  0.20,  0.20,  0.05     !  g_area
+  15.00, 20.00, 20.00, 20.00, 20.00     !  g_grow
+   0.25,  0.15,  0.25,  0.25,  0.25     !  g_root
+  0.005, 0.005,  0.20,  0.20,  0.05     !  g_wood
+   9.00,  5.00,  4.00,  4.00,  3.00     !  lai_max
+   1.00,  1.00,  1.00,  1.00,  1.00     !  lai_min
+
+################################################################################
+## Agricultural fraction.
+>INIT_AGRIC
+
+F                             !  readFile
+'bin'                             !  fileFormat
+'input/agr.dat'                     !  fileName             !DSM Nao utilizado: lendo do arquivo do BRAMS
+
+>ASCBIN
+0,0                          !  nheaderFile,nheaderField
+1                            !  fieldNum
+
+>NC
+'frac_agr'            !  varName
+
+# Data fields to be read from this file should appear below here.
+>DATA
+10000*0.0             !  frac_agr
+
+################################################################################
+## Miscellaneous surface and carbon/veg parameters.
+>INIT_MISC
+
+ 5.7E4, 1.1E4         !  hleaf,hwood
+ 0.83, 0.93           !  beta1,beta2
+ 0.5, 2.0e4           !  fwe_c3, fwe_c4
+ 2.0                  !  q10_leaf
+ 0.5e-8               !  kaps
+ 3.22e-7,9.65e-9,2.12e-8,6.43e-10  !  kaps_roth(1:4)
+ 2.0                  !  q10_soil
+ 1.0e-6               !  cs_min
+ 5.24100e-04          !  co2_mmr
+ 1.0e-6, 0.01         !  frac_min, frac_seed
+ 20.0                 !  pow (for SIGM)
+
+################################################################################
+## Miscellaneous surface and carbon/veg parameters.
+>INIT_IMOGEN
+
+'/path/to/imogen_order.dat'  ! IMOGEN points order
+'/path/to/imogen.nlst' ! IMOGEN namelist file
+
+################################################################################
+## Details of driving data.
+>INIT_DRIVE
+
+1200                    !  driveDataPer  !DSM - Nao utilizado, estah sempre igual ao timestep
+1,-9                    !  ndriveFileTime,driveFilePer,
+F                       !  readList
+'./LOOBOS/Loobos_1997.dat'   !  file name                     !INPUT from BRAMS
+19961231,'23:00:00'     !  driveFileDate(1),driveFileTime(1)
+F                       !  driveEndTime
+'bin'                   !  driveFormat
+
+1,T                    !  ioPrecipType,l_point_data
+274.0                  !  tForSnow
+373.15,0.3             !  tForCRain,conFrac
+1,F                    !  io_rad_type,ioWindSpeed
+T,0.1                  !  useDiffRad,diffFracConst
+10.0, 10.0             !  z1_uv, z1_tq    !DSM - Nao utilizado - assumindo o primeiro nivel do modelo - z0
+
+0                      !  ndriveExtra
+
+>ASCBIN
+F                       !  byteSwapDrive
+9                       !  nfieldDriveFile
+5,0,0                   !  ndriveHeaderFile,ndriveHeaderTime,ndriveHeaderField
+T                       !  noNewLineDrive
+>VARS
+pstar      7  nf  press   !  name,field number, interpolation type, name as in file name
+t          4  nf  tempk
+q          8  nf  rv
+u          5  nf  u
+v          6  nf  v
+lw_down    2  nf  rlong
+sw_down    1  nf  rshort
+precip     3  nf  precip
+diff_rad   9  nf  rshort_diffuse
+>ENDVARS
+
+>NC
+'gswp2'                  !  ncTypeDrive
+>VARS
+pstar       pstar  psfc  nf  !  name,name of SDF variable, name as in file name, interpolation type
+t           t      t     nf
+q           q      q     nf 
+u           u      u     nf
+v           v      v     nf 
+lw_down     lw     lw    nf
+sw_down     sw     sw    nf
+precip      liqp   liqp  nf 
+>ENDVARS
+
+################################################################################
+## The initial state.
+>INIT_IC
+
+F                 !   readFile    !DSM - Manter sempre "F" - serah T automaticamente, caso RUNTYPE=´HISTORY'
+'nc'              !    fileFormat    !DSM - Manter sempre "nc"
+T,T               !    dumpFile,allDump   !DSM - Manter sempre "T,T"
+'./LOOBOS/loobos_final_dump.19971231_desativado'   ! fileName  !DSM Nao utilizado: Terah o prefixo definido no RAMSIN
+F,F       !  zrevSoil,zrevSnow
+T         !  totalWetness
+T         !  totalSnow
+
+>ASCBIN
+0,0                       !  nheaderFile,nheaderField
+>VARS
+sthuf        1     0.0   !  varName,varFlag, constVal
+tstar_tile   2   275.0
+t_soil       3   278.0
+gs           4     1.0
+cs          -1     12.0   !era 16.0  !68.33   !DSM  kg C/m2
+canopy      -1     1.0
+rgrain      -1     1.0
+snow_tile   -1     0.0
+>ENDVARS
+
+>NC
+>VARS
+sthuf        1     0.9   sthuf   !  varName,varFlag, constVal,SDF varname
+canopy       1     0.0   canopy
+rgrain       1    50.0   rgrain
+tstar_tile   1   275.0   tstar_t
+t_soil       1   278.0   t_soil
+cs           1     1.5   cs
+gs           1     0.0   gs
+snow_tile    1     0.0   snow_tile
+>ENDVARS
+
+
+# Data fields to be read from this file should appear below here.
+>DATA
+0.749, 0.743, 0.754, 0.759 , 0.759  !  sthu+sthf(1:sm_levels)(top to bottom)       !DSM nao utilizado.
+9*276.78                     !  tstar_tile(1:ntiles)                       !DSM nao utilizado.
+276.78,277.46,278.99,282.48,282.48  !  t_soil(1:sm_levels)(top to bottom)         !DSM nao utilizado.
+0.355, 0.355, 0.208, 0.0, 0.0, 0.0, 0.0, 0.082, 0.0  !  frac(1:ntype)      !DSM nao utilizado.
+0.0                          !  gs                                         !DSM nao utilizado.
+0.00                         !  cs                                         !DSM nao utilizado.
+9*0.0                        !  canopy(1:ntiles)                           !DSM nao utilizado.
+9*50.0                       !  rgrain(1:ntiles)                           !DSM nao utilizado.
+0.0,0.46,7*0.0               !  snow_tile(1:ntiles)                        !DSM nao utilizado.
+19.01,16.38,0.79,1.26,1.00   !  canht(1:npft)                              !DSM nao utilizado.
+5.0, 4.0, 2.0, 4.0, 1.0      !  lai(1:npft)                                !DSM nao utilizado.
+
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+## Output selection.
+
+>INIT_OUT
+
+'loobos'      !  run_id                !DSM Nao utilizado: Terah o prefixo definido no RAMSIN
+'./OUTPUT'    !  directory for output  !DSM Nao utilizado: Gravando no local definido pelo RAMSIN
+
+0             !  dumpFreq              !DSM Nao utilizado: Seguindo a opcao do RAMSIN
+'nc'          !  dumpFormat            !DSM - Manter sempre "nc"
+'replace'     !  dumpStatus
+
+0             !  number of output profiles
+'bin'         !  outFormat
+T             !  gradsNc
+'replace'     !  outStatus
+F             !  yrevOut
+T,T           !  zrevOutSoil,zrevOutSnow
+T             !  numMonth
+T             !  useTemplate
+-1.0e20       !  missing/undefined data value for output (undefOut)
+1.0, 1.0      !  zsmc,zst
+'big_endian'  !  outEndian

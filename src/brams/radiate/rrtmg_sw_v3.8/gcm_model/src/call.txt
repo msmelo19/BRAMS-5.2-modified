@@ -1,0 +1,89 @@
+mcica_random_numbers.f90:!   adapted cosmetically by making the names more general.  
+mcica_random_numbers.f90:! Users must declare one or more variables of type randomNumberSequence in the calling 
+mcica_random_numbers.f90:    ! All functions for getting random numbers call this one, 
+mcica_random_numbers.f90:    if(twister%currentElement >= blockSize) call nextState(twister)
+mcica_random_numbers.f90:      call getRandomNumber_1D(stream, numbers(:, i))
+mcica_random_numbers.f90:!    call get_date(time, year, month, day, hour, minute, second)
+mcica_subcol_gen_sw.f90:      integer(kind=im), intent(in) :: permuteseed     ! if the cloud generator is called multiple times,
+mcica_subcol_gen_sw.f90:                                                      ! permute the seed between each call;
+mcica_subcol_gen_sw.f90:                                                      ! between calls for LW and SW, recommended
+mcica_subcol_gen_sw.f90:      call generate_stochastic_clouds_sw (ncol, nlay, nsubcsw, icld, irng, pmid, cldfrac, clwp, ciwp, &
+mcica_subcol_gen_sw.f90:  !  If the stochastic cloud generator is called several times during the same timestep, 
+mcica_subcol_gen_sw.f90:  !  one should change the seed between the call to insure that the subcolumns are different.
+mcica_subcol_gen_sw.f90:  !  use 'changeSeed = 1' for the first call and'changeSeed = 2' for the second call 
+mcica_subcol_gen_sw.f90:            call kissvec(seed1, seed2, seed3, seed4, rand_num)
+mcica_subcol_gen_sw.f90:                  call kissvec(seed1, seed2, seed3, seed4, rand_num)
+mcica_subcol_gen_sw.f90:                  call kissvec(seed1, seed2, seed3, seed4, rand_num)
+mcica_subcol_gen_sw.f90:               call kissvec(seed1, seed2, seed3, seed4, rand_num)
+mcica_subcol_gen_sw.f90:!             call kissvec(seed1, seed2, seed3, seed4, rand_num)
+mcica_subcol_gen_sw.f90:!             call kissvec(seed1, seed2, seed3, seed4, rand_num)
+rrtmg_sw_init.f90:      call swdatinit(cpdair)
+rrtmg_sw_init.f90:      call swcmbdat              ! g-point interval reduction data
+rrtmg_sw_init.f90:      call swaerpr               ! aerosol optical properties
+rrtmg_sw_init.f90:      call swcldpr               ! cloud optical properties
+rrtmg_sw_init.f90:      call swatmref              ! reference MLS profile
+rrtmg_sw_init.f90:      call sw_kgb16              ! molecular absorption coefficients
+rrtmg_sw_init.f90:      call sw_kgb17
+rrtmg_sw_init.f90:      call sw_kgb18
+rrtmg_sw_init.f90:      call sw_kgb19
+rrtmg_sw_init.f90:      call sw_kgb20
+rrtmg_sw_init.f90:      call sw_kgb21
+rrtmg_sw_init.f90:      call sw_kgb22
+rrtmg_sw_init.f90:      call sw_kgb23
+rrtmg_sw_init.f90:        call sw_kgb24
+rrtmg_sw_init.f90:        call sw_kgb25
+rrtmg_sw_init.f90:        call sw_kgb26
+rrtmg_sw_init.f90:        call sw_kgb27
+rrtmg_sw_init.f90:        call sw_kgb28
+rrtmg_sw_init.f90:        call sw_kgb29
+rrtmg_sw_init.f90:        call cmbgb16s
+rrtmg_sw_init.f90:        call cmbgb17
+rrtmg_sw_init.f90:        call cmbgb18
+rrtmg_sw_init.f90:        call cmbgb19
+rrtmg_sw_init.f90:        call cmbgb20
+rrtmg_sw_init.f90:        call cmbgb21
+rrtmg_sw_init.f90:        call cmbgb22
+rrtmg_sw_init.f90:        call cmbgb23
+rrtmg_sw_init.f90:        call cmbgb24
+rrtmg_sw_init.f90:        call cmbgb25
+rrtmg_sw_init.f90:        call cmbgb26
+rrtmg_sw_init.f90:        call cmbgb27
+rrtmg_sw_init.f90:        call cmbgb28
+rrtmg_sw_init.f90:        call cmbgb29
+rrtmg_sw_rad.f90:         call inatm_sw (iplon, nlay, icld, iaer, &
+rrtmg_sw_rad.f90:         call cldprmc_sw(nlayers, inflag, iceflag, liqflag, cldfmc, &
+rrtmg_sw_rad.f90:         call setcoef_sw(nlayers, pavel, tavel, pz, tz, tbound, coldry, wkl, &
+rrtmg_sw_rad.f90:         call spcvmc_sw &
+rrtmg_sw_rad.nomcica.f90: call inatm_sw (iplon, nlay, icld, iaer, &
+rrtmg_sw_rad.nomcica.f90: call cldprop_sw(nlayers, inflag, iceflag, liqflag, cldfrac, &
+rrtmg_sw_rad.nomcica.f90: call setcoef_sw(nlayers, pavel, tavel, pz, tz, tbound, coldry, wkl, &
+rrtmg_sw_rad.nomcica.f90: call spcvrt_sw &
+rrtmg_sw_read_nc.f90:	  call getAbsorberIndex('CH4',ab)
+rrtmg_sw_read_nc.f90:	  call getAbsorberIndex('O3',ab)
+rrtmg_sw_read_nc.f90:	  call getAbsorberIndex('O3',ab)
+rrtmg_sw_read_nc.f90:	  call getAbsorberIndex('H2O',ab)
+rrtmg_sw_read_nc.f90:	  call getAbsorberIndex('CO2',ab)
+rrtmg_sw_spcvmc.f90:      call taumol_sw(klev, &
+rrtmg_sw_spcvmc.f90:      call reftra_sw (klev, &
+rrtmg_sw_spcvmc.f90:      call reftra_sw (klev, &
+rrtmg_sw_spcvmc.f90:      call vrtqdr_sw(klev, iw, &
+rrtmg_sw_spcvmc.f90:      call vrtqdr_sw(klev, iw, &
+rrtmg_sw_spcvrt.f90:      call taumol_sw(klev, &
+rrtmg_sw_spcvrt.f90:      call reftra_sw (klev, &
+rrtmg_sw_spcvrt.f90:      call reftra_sw (klev, &
+rrtmg_sw_spcvrt.f90:      call vrtqdr_sw (klev, iw, &
+rrtmg_sw_spcvrt.f90:      call vrtqdr_sw (klev, iw, &
+rrtmg_sw_taumol.f90:      call taumol16
+rrtmg_sw_taumol.f90:      call taumol17
+rrtmg_sw_taumol.f90:      call taumol18
+rrtmg_sw_taumol.f90:      call taumol19
+rrtmg_sw_taumol.f90:      call taumol20
+rrtmg_sw_taumol.f90:      call taumol21
+rrtmg_sw_taumol.f90:      call taumol22
+rrtmg_sw_taumol.f90:      call taumol23
+rrtmg_sw_taumol.f90:      call taumol24
+rrtmg_sw_taumol.f90:      call taumol25
+rrtmg_sw_taumol.f90:      call taumol26
+rrtmg_sw_taumol.f90:      call taumol27
+rrtmg_sw_taumol.f90:      call taumol28
+rrtmg_sw_taumol.f90:      call taumol29

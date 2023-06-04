@@ -1,0 +1,163 @@
+mcica_random_numbers.f90:  subroutine nextState(twister)
+mcica_random_numbers.f90:  subroutine finalize_RandomNumberSequence(twister)
+mcica_random_numbers.f90:  subroutine getRandomNumber_Scalar(stream, number)
+mcica_random_numbers.f90:  subroutine getRandomNumber_1D(stream, numbers)
+mcica_random_numbers.f90:  subroutine getRandomNumber_2D(stream, numbers)
+mcica_subcol_gen_sw.f90:   subroutine mcica_subcol_sw(iplon, ncol, nlay, icld, permuteseed, irng, play, &
+mcica_subcol_gen_sw.f90:      subroutine generate_stochastic_clouds_sw(ncol, nlay, nsubcol, icld, irng, pmid, cld, clwp, ciwp, &
+mcica_subcol_gen_sw.f90:      subroutine kissvec(seed1,seed2,seed3,seed4,ran_arr)
+rrtmg_sw_cldprmc.f90:      subroutine cldprmc_sw(nlayers, inflag, iceflag, liqflag, cldfmc, &
+rrtmg_sw_cldprop.f90:      subroutine cldprop_sw(nlayers, inflag, iceflag, liqflag, cldfrac, &
+rrtmg_sw_init.f90:      subroutine rrtmg_sw_ini(cpdair)
+rrtmg_sw_init.f90:      subroutine swdatinit(cpdair)
+rrtmg_sw_init.f90:      subroutine swcmbdat
+rrtmg_sw_init.f90:      subroutine swaerpr
+rrtmg_sw_init.f90:      subroutine cmbgb16s
+rrtmg_sw_init.f90:      subroutine cmbgb17
+rrtmg_sw_init.f90:      end subroutine cmbgb17
+rrtmg_sw_init.f90:      subroutine cmbgb18
+rrtmg_sw_init.f90:      end subroutine cmbgb18
+rrtmg_sw_init.f90:      subroutine cmbgb19
+rrtmg_sw_init.f90:      end subroutine cmbgb19
+rrtmg_sw_init.f90:      subroutine cmbgb20
+rrtmg_sw_init.f90:      end subroutine cmbgb20
+rrtmg_sw_init.f90:      subroutine cmbgb21
+rrtmg_sw_init.f90:      end subroutine cmbgb21
+rrtmg_sw_init.f90:      subroutine cmbgb22
+rrtmg_sw_init.f90:      end subroutine cmbgb22
+rrtmg_sw_init.f90:      subroutine cmbgb23
+rrtmg_sw_init.f90:      end subroutine cmbgb23
+rrtmg_sw_init.f90:      subroutine cmbgb24
+rrtmg_sw_init.f90:      end subroutine cmbgb24
+rrtmg_sw_init.f90:      subroutine cmbgb25
+rrtmg_sw_init.f90:      end subroutine cmbgb25
+rrtmg_sw_init.f90:      subroutine cmbgb26
+rrtmg_sw_init.f90:      end subroutine cmbgb26
+rrtmg_sw_init.f90:      subroutine cmbgb27
+rrtmg_sw_init.f90:      end subroutine cmbgb27
+rrtmg_sw_init.f90:      subroutine cmbgb28
+rrtmg_sw_init.f90:      end subroutine cmbgb28
+rrtmg_sw_init.f90:      subroutine cmbgb29
+rrtmg_sw_init.f90:      end subroutine cmbgb29
+rrtmg_sw_init.f90:      subroutine swcldpr
+rrtmg_sw_init.f90:!    subroutine.
+rrtmg_sw_init.f90:      end subroutine swcldpr
+rrtmg_sw_k_g.f90:!      subroutine sw_kgbnn
+rrtmg_sw_k_g.f90:!  This file contains 14 subroutines that include the 
+rrtmg_sw_k_g.f90:      subroutine sw_kgb16
+rrtmg_sw_k_g.f90:      end subroutine sw_kgb16
+rrtmg_sw_k_g.f90:      subroutine sw_kgb17
+rrtmg_sw_k_g.f90:      end subroutine sw_kgb17
+rrtmg_sw_k_g.f90:      subroutine sw_kgb18
+rrtmg_sw_k_g.f90:      end subroutine sw_kgb18
+rrtmg_sw_k_g.f90:      subroutine sw_kgb19
+rrtmg_sw_k_g.f90:      end subroutine sw_kgb19
+rrtmg_sw_k_g.f90:      subroutine sw_kgb20
+rrtmg_sw_k_g.f90:      end subroutine sw_kgb20
+rrtmg_sw_k_g.f90:      subroutine sw_kgb21
+rrtmg_sw_k_g.f90:      end subroutine sw_kgb21
+rrtmg_sw_k_g.f90:      subroutine sw_kgb22
+rrtmg_sw_k_g.f90:      end subroutine sw_kgb22
+rrtmg_sw_k_g.f90:      subroutine sw_kgb23
+rrtmg_sw_k_g.f90:      end subroutine sw_kgb23
+rrtmg_sw_k_g.f90:      subroutine sw_kgb24
+rrtmg_sw_k_g.f90:      end subroutine sw_kgb24
+rrtmg_sw_k_g.f90:      subroutine sw_kgb25
+rrtmg_sw_k_g.f90:      end subroutine sw_kgb25
+rrtmg_sw_k_g.f90:      subroutine sw_kgb26
+rrtmg_sw_k_g.f90:      end subroutine sw_kgb26
+rrtmg_sw_k_g.f90:      subroutine sw_kgb27
+rrtmg_sw_k_g.f90:      end subroutine sw_kgb27
+rrtmg_sw_k_g.f90:      subroutine sw_kgb28
+rrtmg_sw_k_g.f90:      end subroutine sw_kgb28
+rrtmg_sw_k_g.f90:      subroutine sw_kgb29
+rrtmg_sw_k_g.f90:      end subroutine sw_kgb29
+rrtmg_sw_rad.f90:! public interfaces/functions/subroutines
+rrtmg_sw_rad.f90:! Public subroutines
+rrtmg_sw_rad.f90:      subroutine rrtmg_sw &
+rrtmg_sw_rad.f90:!     and subroutine rrtmg_sw_cldprmc.f90 for further details):
+rrtmg_sw_rad.f90:      end subroutine rrtmg_sw
+rrtmg_sw_rad.f90:      subroutine inatm_sw (iplon, nlay, icld, iaer, &
+rrtmg_sw_rad.f90:      end subroutine inatm_sw
+rrtmg_sw_rad.nomcica.f90:! public interfaces/functions/subroutines
+rrtmg_sw_rad.nomcica.f90:! Public subroutines
+rrtmg_sw_rad.nomcica.f90:      subroutine rrtmg_sw &
+rrtmg_sw_rad.nomcica.f90:!     and subroutine rrtmg_sw_cldprop.f90 for further details):
+rrtmg_sw_rad.nomcica.f90:! overlap method (read by subroutine readprof from input file INPUT_RRTM):  
+rrtmg_sw_rad.nomcica.f90:      end subroutine rrtmg_sw
+rrtmg_sw_rad.nomcica.f90:      subroutine inatm_sw (iplon, nlay, icld, iaer, &
+rrtmg_sw_rad.nomcica.f90:      end subroutine inatm_sw
+rrtmg_sw_read_nc.f90:!              file in band by band subroutines, as a replacement for the 
+rrtmg_sw_read_nc.f90:subroutine sw_kgb16
+rrtmg_sw_read_nc.f90:end subroutine sw_kgb16
+rrtmg_sw_read_nc.f90:subroutine sw_kgb17
+rrtmg_sw_read_nc.f90:end subroutine sw_kgb17
+rrtmg_sw_read_nc.f90:subroutine sw_kgb18
+rrtmg_sw_read_nc.f90:end subroutine sw_kgb18
+rrtmg_sw_read_nc.f90:subroutine sw_kgb19
+rrtmg_sw_read_nc.f90:end subroutine sw_kgb19
+rrtmg_sw_read_nc.f90:subroutine sw_kgb20
+rrtmg_sw_read_nc.f90:end subroutine sw_kgb20
+rrtmg_sw_read_nc.f90:subroutine sw_kgb21
+rrtmg_sw_read_nc.f90:end subroutine sw_kgb21
+rrtmg_sw_read_nc.f90:subroutine sw_kgb22	
+rrtmg_sw_read_nc.f90:end subroutine sw_kgb22
+rrtmg_sw_read_nc.f90:subroutine sw_kgb23		
+rrtmg_sw_read_nc.f90:end subroutine sw_kgb23
+rrtmg_sw_read_nc.f90:subroutine sw_kgb24	
+rrtmg_sw_read_nc.f90:end subroutine sw_kgb24
+rrtmg_sw_read_nc.f90:subroutine sw_kgb25		
+rrtmg_sw_read_nc.f90:end subroutine sw_kgb25
+rrtmg_sw_read_nc.f90:subroutine sw_kgb26
+rrtmg_sw_read_nc.f90:end subroutine sw_kgb26
+rrtmg_sw_read_nc.f90:subroutine sw_kgb27
+rrtmg_sw_read_nc.f90:end subroutine sw_kgb27
+rrtmg_sw_read_nc.f90:subroutine sw_kgb28		
+rrtmg_sw_read_nc.f90:end subroutine sw_kgb28
+rrtmg_sw_read_nc.f90:subroutine sw_kgb29	
+rrtmg_sw_read_nc.f90:end subroutine sw_kgb29
+rrtmg_sw_reftra.f90:      subroutine reftra_sw(nlayers, lrtchk, pgg, prmuz, ptau, pw, &
+rrtmg_sw_reftra.f90:      end subroutine reftra_sw
+rrtmg_sw_setcoef.f90:      subroutine setcoef_sw(nlayers, pavel, tavel, pz, tz, tbound, coldry, wkl, &
+rrtmg_sw_setcoef.f90:      end subroutine setcoef_sw
+rrtmg_sw_setcoef.f90:      subroutine swatmref
+rrtmg_sw_setcoef.f90:      end subroutine swatmref
+rrtmg_sw_spcvmc.f90:      subroutine spcvmc_sw &
+rrtmg_sw_spcvmc.f90:!   Use only if subroutine rrtmg_sw_cldprop is not used to get cloud properties and to apply delta scaling
+rrtmg_sw_spcvmc.f90:      end subroutine spcvmc_sw
+rrtmg_sw_spcvrt.f90:      subroutine spcvrt_sw &
+rrtmg_sw_spcvrt.f90:!   Use only if subroutine rrtmg_sw_cldprop is not used to get cloud properties and to apply delta scaling
+rrtmg_sw_spcvrt.f90:      end subroutine spcvrt_sw
+rrtmg_sw_taumol.f90:      subroutine taumol_sw(nlayers, &
+rrtmg_sw_taumol.f90:! *    This file contains the subroutines TAUGBn (where n goes from            *
+rrtmg_sw_taumol.f90:      subroutine taumol16
+rrtmg_sw_taumol.f90:      end subroutine taumol16
+rrtmg_sw_taumol.f90:      subroutine taumol17
+rrtmg_sw_taumol.f90:      end subroutine taumol17
+rrtmg_sw_taumol.f90:      subroutine taumol18
+rrtmg_sw_taumol.f90:       end subroutine taumol18
+rrtmg_sw_taumol.f90:      subroutine taumol19
+rrtmg_sw_taumol.f90:      end subroutine taumol19
+rrtmg_sw_taumol.f90:      subroutine taumol20
+rrtmg_sw_taumol.f90:      end subroutine taumol20
+rrtmg_sw_taumol.f90:      subroutine taumol21
+rrtmg_sw_taumol.f90:      end subroutine taumol21
+rrtmg_sw_taumol.f90:      subroutine taumol22
+rrtmg_sw_taumol.f90:      end subroutine taumol22
+rrtmg_sw_taumol.f90:      subroutine taumol23
+rrtmg_sw_taumol.f90:      end subroutine taumol23
+rrtmg_sw_taumol.f90:      subroutine taumol24
+rrtmg_sw_taumol.f90:      end subroutine taumol24
+rrtmg_sw_taumol.f90:      subroutine taumol25
+rrtmg_sw_taumol.f90:      end subroutine taumol25
+rrtmg_sw_taumol.f90:      subroutine taumol26
+rrtmg_sw_taumol.f90:      end subroutine taumol26
+rrtmg_sw_taumol.f90:      subroutine taumol27
+rrtmg_sw_taumol.f90:      end subroutine taumol27
+rrtmg_sw_taumol.f90:      subroutine taumol28
+rrtmg_sw_taumol.f90:      end subroutine taumol28
+rrtmg_sw_taumol.f90:      subroutine taumol29
+rrtmg_sw_taumol.f90:      end subroutine taumol29
+rrtmg_sw_taumol.f90:      end subroutine taumol_sw
+rrtmg_sw_vrtqdr.f90:      subroutine vrtqdr_sw(klev, kw, &
+rrtmg_sw_vrtqdr.f90:      end subroutine vrtqdr_sw

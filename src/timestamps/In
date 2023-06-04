@@ -1,0 +1,5 @@
+&TSInput
+machsize=6000
+pathIn="/scratchin/grupos/pad/home/jairo.panetta/BRAMS5.0/CCATT-50/Run20km/"
+pathOut="./"
+/

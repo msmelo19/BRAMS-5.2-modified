@@ -89,8 +89,9 @@ MODULE CUPARM_GRELL3
 !----------- 
 
   use ccatt_start, only: ccatt 
-  
-  use mem_jules, only: jules_g
+  !newCode begin
+  !use mem_jules, only: jules_g
+  !newCode end
   
   implicit none
 
@@ -620,7 +621,9 @@ subroutine CUPARM_GRELL3_CATT(OneGrid, iens,iinqparm,iinshcu)
    endif
 
    if(isfcl == 5) then 
-     temp2m(:,:) = jules_g(ngrid)%t2mj(:,:)
+     !newCode begin
+     !temp2m(:,:) = jules_g(ngrid)%t2mj(:,:)
+     !newCode end
    else 
      temp2m(:,:) =0.5*( basic_g(ngrid)%theta(1,:,:)* &
                        (basic_g(ngrid)%pp(1,:,:)+basic_g(ngrid)%pi0(1,:,:))/cp + &
@@ -861,7 +864,9 @@ subroutine CUPARM_GRELL3_CATT(OneGrid, iens,iinqparm,iinshcu)
    endif
 
    if(isfcl == 5) then 
-     temp2m(:,:) = jules_g(ngrid)%t2mj(:,:)
+     !newCode begin
+     !temp2m(:,:) = jules_g(ngrid)%t2mj(:,:)
+     !newCode end
    else 
      temp2m(:,:) =0.5*( basic_g(ngrid)%theta(1,:,:)* &
                        (basic_g(ngrid)%pp(1,:,:)+basic_g(ngrid)%pi0(1,:,:))/cp + &

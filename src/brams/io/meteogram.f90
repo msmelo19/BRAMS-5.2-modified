@@ -368,7 +368,10 @@ module meteogram
 
             !SLP METAR - 5-TOPT, 6-PI0 7-THETA 15-PP    
             !$ RAMS_comp_press
-            aux0 = ((auxMeteoPoly%vertices(vertice)%var(6)%cellPointer+auxMeteoPoly%vertices(vertice)%var(15)%cellPointer)/cp)**cpor*p00*.01
+            !newCode begin
+            !aux0 = ((auxMeteoPoly%vertices(vertice)%var(6)%cellPointer+auxMeteoPoly%vertices(vertice)%var(15)%cellPointer)/cp)**cpor*p00*.01
+ aux0 = ((auxMeteoPoly%vertices(vertice)%var(6)%cellPointer+auxMeteoPoly%vertices(vertice)%var(15)%cellPointer)/cp)**cpor*p00*.01
+            !newCode end
             !$ RAMS_comp_tempk
             !$aux1 = (auxMeteoPoly%vertices(vertice)%var(7)%cellPointer * aux0 /cp
             !$ comp_slp_metar

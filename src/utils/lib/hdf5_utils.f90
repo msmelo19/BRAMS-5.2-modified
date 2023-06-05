@@ -21,7 +21,10 @@ module hdf5_utils
     integer            :: nmembers        ! Number of group members
     character(LEN=256) :: name_buffer     ! Buffer to hold object's name
     integer            :: otype           ! Type of the object
-    integer            :: dspace_id       ! dataspace identifier
+    !newCode begin
+    !integer            :: dspace_id       ! dataspace identifier
+    integer*8            :: dspace_id       ! dataspace identifier
+    !newCode end
     integer            :: ndims           ! number of dimensions
     integer(Hsize_t), dimension(2)    :: datadims, maxdatadims ! size of each dimension
     integer            :: i, error

@@ -57,15 +57,15 @@ JULESDIR=$(PWD)
 
 #package        = ../src/ramsmain.f90
 version        = 5.0.1
-PREFIX         = /usr/local
+PREFIX         = /home/u111227/brams/github/BRAMS-5.2-modified/build_debug
 FC             = @FC@
 
 CHEM	       = RELACS_TUV
 
-CCOMP	       = /opt/pgi/osx86-64/12.6/bin/pgcc
-CPCOMP	       = /opt/hdf5-pgi12.6/bin/h5pcc
-FCOMP	       = /opt/pgi/osx86-64/12.6/bin/pgf90
-FPCOMP	       = /opt/hdf5-pgi12.6/bin/h5pfc
+CCOMP	       = gcc
+CPCOMP	       = mpicc.openmpi
+FCOMP	       = gfortran
+FPCOMP	       = mpif90.openmpi
 
 
 ## The user is advised not to modify code below this line. ##
@@ -119,8 +119,8 @@ $(error You need to set the variable FPCOMP either in configure command line)
 endif
 
 ifeq ($(notdir $(FPCOMP)),mpif90)
-F_COMP=$(FPCOMP) -f90=$(FCOMP)
-C_COMP=$(CPCOMP) -cc=$(CCOMP)	
+F_COMP=$(FPCOMP)
+C_COMP=$(CPCOMP)	
 endif
 
 ifeq ($(notdir $(FPCOMP)),ftn)

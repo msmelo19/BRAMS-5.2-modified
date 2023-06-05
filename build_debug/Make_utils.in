@@ -45,7 +45,7 @@ ifndef FPCOMP
 $(error You need to set the variable FPCOMP either in configure command line)
 endif
 
-ifeq ($(notdir $(FPCOMP)),mpif90)
+ifeq ($(notdir $(FPCOMP)),mpif90.openmpi)
 FC=$(FPCOMP)
 CC=$(CPCOMP)
 

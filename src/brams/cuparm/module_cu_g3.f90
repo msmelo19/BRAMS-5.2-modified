@@ -4414,7 +4414,7 @@ CONTAINS
                 xff_ens3(2)=(a_ave-AA0(I))/dtime
                 if(irandom.eq.1)then
                    seed(1)=i
-                   call random_seed (PUT=seed)
+                   call random_seed ()
                    call random_number (xxx)
                    ixxx=min(ens4,max(1,int(fens4*xxx+1.e-8)))
                    xff_ens3(3)=(axx(i,ixxx)-AA0(I))/dtime
@@ -4503,7 +4503,7 @@ CONTAINS
                 if(high_resolution.eq.0)then
                 if(irandom.eq.1)then
                    seed(1)=i
-                   call random_seed (PUT=seed)
+                   call random_seed ()
                    call random_number (xxx)
                    ixxx=min(ens4,max(1,int(fens4*xxx+1.e-8)))
                    xff_ens3(15)=mconv(i,ixxx)
@@ -4518,7 +4518,7 @@ CONTAINS
                 xff_ens3(11)=AA1(I)/(60.*40.)
                 if(irandom.eq.1)then
                    seed(1)=i
-                   call random_seed (PUT=seed)
+                   call random_seed ()
                    call random_number (xxx)
                    ixxx=min(ens4,max(1,int(fens4*xxx+1.e-8)))
                    xff_ens3(12)=AXX(I,ixxx)/(60.*40.)

@@ -7,7 +7,7 @@
                             !              MAKEVFILE, or MEMORY
    TIMEUNIT = 'h',          ! 'h','m','s' - Time units of TIMMAX, TIMSTR, VTIME
 
-   TIMMAX   = 24.,          ! Final time of simulation
+   TIMMAX   = 6.,          ! Final time of simulation
 
 !  Start of simulation or ISAN processing
 
@@ -165,7 +165,7 @@
    VWAIT1   = 0.,            ! wait between each VFILE check (s)
    VWAITTOT = 0.,            ! total wait befor giving up on a VFILE (s)
 
-   NUD_HFILE =   './dataout/2014012700/ANL/BRAMS-STILT', 
+   NUD_HFILE =   '/scratchout/oper/tempo/BRAMS/ams_20km/dataout/2014012700/ANL/BRAMS-STILT', 
               ! Header file name for history nudging files (only prefix is used)
 
 
@@ -207,7 +207,7 @@
    AFILOUT  = './dataout/ANL/meteo-only',       ! Analysis file prefix
    ICLOBBER = 1,                 ! 0=stop if files exist, 1=overwite files
    IHISTDEL = 1,                 ! 0=keep all hist files, 1=delete previous
-   FRQHIS   = 864000.,           ! History file frequency
+   FRQHIS   = 10800.,           ! History file frequency
    FRQANL   = 3600.,             ! Analysis file frequency
 
 !-----------------------------------------------------------------------
@@ -250,7 +250,7 @@
  
    ISOILFN  = './shared_datain/SURFACE_DATA/GL_FAO_INPE/FAO',
 
-   NDVIFN  = './shared_datain/SURFACE_DATA/NDVI-MODIS_h5/N',           
+   NDVIFN  = './shared_datain/SURFACE_DATA/NDVI-MODIS_vfm/N',           
              
      
 ! Topography scheme
@@ -460,7 +460,7 @@
 ! Microphysics
 
 
-   MCPHYS_TYPE = 2,          ! microphysics formulation
+   MCPHYS_TYPE = 0,          ! microphysics formulation
                              ! 0 = original brams
 			     ! 1 = double-moment from CSU rams6.0
 			     ! 2 = Greg Thompson cloud water single moment
@@ -725,7 +725,7 @@
   $END
 
   $POST
-    NVP = 16,
+    NVP = 15,
     VP ='tempk'     ,
      	'rh'	    ,
      	'rv'	    ,
@@ -768,5 +768,5 @@
      applyMeteogram = .false.,
      meteogramFreq  = 1800.,
      meteogramMap  = './tables/meteogram/citiesBr.txt',
-     meteogramDir   = './dataout/2014012712/HST/HST2014013012'
+     meteogramDir   = '/scratchout/oper/io/BRAMS/ams_05km/dataout/2014013012/HST/HST2014013012'
    $END

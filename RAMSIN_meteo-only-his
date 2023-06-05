@@ -3,11 +3,11 @@
 
    EXPNME   = 'BRAMS version 5.2',
 
-   RUNTYPE  = 'INITIAL',    ! Type of run: MAKESFC, INITIAL, HISTORY,
+   RUNTYPE  = 'HISTORY',    ! Type of run: MAKESFC, INITIAL, HISTORY,
                             !              MAKEVFILE, or MEMORY
    TIMEUNIT = 'h',          ! 'h','m','s' - Time units of TIMMAX, TIMSTR, VTIME
 
-   TIMMAX   = 24.,          ! Final time of simulation
+   TIMMAX   = 6.,          ! Final time of simulation
 
 !  Start of simulation or ISAN processing
 
@@ -68,11 +68,11 @@
    NSTRATZ2 = 3,    !
 
 
-   POLELAT  = -23.,      ! Latitude  of pole point
-   POLELON  = -50.,      ! Longitude of pole point
+   POLELAT  = -1.25,      ! Latitude  of pole point
+   POLELON  = -50.5,      ! Longitude of pole point
 
-   CENTLAT  = -23.,      ! Latitude  of grid center 
-   CENTLON  = -50.,      ! Longitude of grid center 
+   CENTLAT  = -1.25,      ! Latitude  of grid center 
+   CENTLON  = -50.5,      ! Longitude of grid center 
                            
 			    ! Grid point on the next coarser
                             ! nest where the lower southwest
@@ -89,10 +89,10 @@
  
   $CCATT_INFO
 
-   CCATT = 1, ! 1 - CCATT environmental model activated 
+   CCATT = 0, ! 1 - CCATT environmental model activated 
               ! 0 - OFF
 
-   CHEMISTRY = 4,  ! -1- only atmospheric model
+   CHEMISTRY = -1,  ! -1- only atmospheric model
                    !  0- only tracer transport with atmos. model
 		   !  1- activate the loss/production by kinetic chemical
                    !    and photochemical reactions, with solver 1
@@ -113,12 +113,12 @@
    CHEMISTRY_AQ = 0,  !  1 - ON
 	              !  0 - OFF aqueous chemistry
 
-   CHEM_ASSIM = 1, ! 4dda for chemistry species with mocage data
+   CHEM_ASSIM = 0, ! 4dda for chemistry species with mocage data
                    ! 0 - off, 1 - on 
 
-  ! SRCMAPFN = 'NONE', ! Source Map file prefix
+   SRCMAPFN = 'NONE', ! Source Map file prefix
                                                      ! use 'NONE' to turn off emissions
-    SRCMAPFN = './datain/COND_SRC_TRC/testcase-5.2', ! Source Map file prefix
+  ! SRCMAPFN = './datain/COND_SRC_TRC/Queima_source', ! Source Map file prefix
  
 
    RECYCLE_TRACERS = 0,
@@ -141,9 +141,6 @@
 		     
    AEROSOL = 1, ! Simple monodisperse aerosol model
                 ! 0 - off, 1 - on 
-   AER_TIMESTEP = 60.,  ! aerosol time step integration (sec)
-                        ! must be an multiple of dtlong (max 4)		
-			! only for the matrix aerosol model		
   $END
 
   $TEB_SPM_INFO
@@ -156,7 +153,7 @@
 
 ! Variable initialization input
 
-   INITIAL  = 2,             ! Initial fields - 1=horiz.homogeneous, 
+   INITIAL  = 3,             ! Initial fields - 1=horiz.homogeneous, 
 
 !  ------ Analysis nudging parameters -----------------------------------
    NUD_TYPE = 2,             ! =1 - nudge from history files(1-way nest)
@@ -164,11 +161,11 @@
                              ! =0 - no analysis nudging
                              !                  2=variable
 !
-   VARFPFX  = './dataout/IVAR/meteo-chem',      ! Varfile initialization file prefix
+   VARFPFX  = './dataout/IVAR/meteo-only',      ! Varfile initialization file prefix
    VWAIT1   = 0.,            ! wait between each VFILE check (s)
    VWAITTOT = 0.,            ! total wait befor giving up on a VFILE (s)
 
-   NUD_HFILE =   './dataout/2014012700/ANL/BRAMS-STILT', 
+   NUD_HFILE =   '/scratchout/oper/tempo/BRAMS/ams_20km/dataout/2014012700/ANL/BRAMS-STILT', 
               ! Header file name for history nudging files (only prefix is used)
 
 
@@ -193,8 +190,8 @@
 !-------------------------------------------------------------------------
 ! History file input
 
-   TIMSTR   = 0.,           ! Time of history start (see TIMEUNIT)
-   HFILIN   = 'NONE',       ! Input history file name
+   TIMSTR   = 3.,           ! Time of history start (see TIMEUNIT)
+   HFILIN   = './dataout/HIS/MO-H-2014-01-27-030000-head.txt',       ! Input history file name
 
 ! Analysis file input for assimilation (currently LEAF variables)
    IPASTIN   = 0,            ! Initialize various fields from analysis file?
@@ -206,11 +203,11 @@
  
    IPOS     =  2,                ! 0-no files, 2-grads files, 1-hdf5(not available yet) 
    IOUTPUT  =  2,                ! 0-no files, 1-hdf5 files, 2-vfm files, 3-mpiio files, 4-binary(not available yet)
-   HFILOUT  = './dataout/HIS/MC',       ! History file prefix
-   AFILOUT  = './dataout/ANL/meteo-chem',       ! Analysis file prefix
+   HFILOUT  = './dataout/HIS/MO',       ! History file prefix
+   AFILOUT  = './dataout/ANL/meteo-only',       ! Analysis file prefix
    ICLOBBER = 1,                 ! 0=stop if files exist, 1=overwite files
    IHISTDEL = 1,                 ! 0=keep all hist files, 1=delete previous
-   FRQHIS   = 864000.,           ! History file frequency
+   FRQHIS   = 10800.,           ! History file frequency
    FRQANL   = 3600.,             ! Analysis file frequency
 
 !-----------------------------------------------------------------------
@@ -223,10 +220,10 @@
  
 ! Input topography variables
 
-   TOPFILES = './dataout/SFC/topCHEM',  ! File path and prefix for topo files.
-   SFCFILES = './dataout/SFC/sfcCHEM',  ! File path and prefix for surface
-   SSTFPFX  = './dataout/SFC/sstCHEM',  ! Path and prefix for sst files
-   NDVIFPFX = './dataout/SFC/ndvCHEM',  ! Path and prefix for ndvi files
+   TOPFILES = './dataout/SFC/top',  ! File path and prefix for topo files.
+   SFCFILES = './dataout/SFC/sfc',  ! File path and prefix for surface
+   SSTFPFX  = './dataout/SFC/sst',  ! Path and prefix for sst files
+   NDVIFPFX = './dataout/SFC/ndv',  ! Path and prefix for ndvi files
 
    ITOPTFLG = 1,           ! 2 - Fill data in "rsurf"
    ISSTFLG  = 1,           ! 0 - Interpolate from coarser grid
@@ -253,7 +250,7 @@
  
    ISOILFN  = './shared_datain/SURFACE_DATA/GL_FAO_INPE/FAO',
 
-   NDVIFN  = './shared_datain/SURFACE_DATA/NDVI-MODIS_h5/N',           
+   NDVIFN  = './shared_datain/SURFACE_DATA/NDVI-MODIS_vfm/N',           
              
      
 ! Topography scheme
@@ -294,7 +291,7 @@
    DYNCORE_FLAG = 0, !0- leapfrog Robert-Asselin filter, 
                      !1- leapfrog Robert-Asselin_Williams filter
 
-   ADVMNT = 1,       ! 0 = Forward 2nd order (non-monotonic)
+   ADVMNT = 0,       ! 0 = Forward 2nd order (non-monotonic)
                      ! 1 = Walcek monotonic advection
                      ! 2 = hybrid: forward 2nd order for thetail,microphysics, TKE and
 		     !             Walcek scheme for tracers 
@@ -427,7 +424,7 @@
                           ! and if not found again then stop.
 
    USDATA_IN  = './datain/UMIDADE/GL_SM.GPNR.',  ! Soil Moisture File prefix
-   USMODEL_IN = './dataout/UMIDADE/GL_SM.GPNR.CHEM.', ! File prefix with pre-calculated data by BRAMS
+   USMODEL_IN = './dataout/UMIDADE/GL_SM.GPNR.', ! File prefix with pre-calculated data by BRAMS
    
    SLZ     =  -12.25, -7.25, -4.250, -2.25, -1.0, -0.35, -0.10,       ! soil grid levels
 
@@ -463,7 +460,7 @@
 ! Microphysics
 
 
-   MCPHYS_TYPE = 2,          ! microphysics formulation
+   MCPHYS_TYPE = 0,          ! microphysics formulation
                              ! 0 = original brams
 			     ! 1 = double-moment from CSU rams6.0
 			     ! 2 = Greg Thompson cloud water single moment
@@ -631,13 +628,13 @@
 
 ! Input data file prefixes
 
-   IAPR    =  './datain/dp-meteo-chem/dp-chem-relacs', ! Input press level dataset
+   IAPR    =  './datain/dp-meteo-only/dp', ! Input press level dataset
    IARAWI  = '', ! Archived rawindsonde file name
    IASRFCE = '', ! Archived surface obs file name
 
 ! File names and dispose flags 
 
-   VARPFX    = './dataout/IVAR/meteo-chem',  ! isan file names prefix
+   VARPFX    = './dataout/IVAR/meteo-only',  ! isan file names prefix
    IOFLGISZ  = 0,           ! Isen-sigz file flag: 0 = no write, 1 = write
    IOFLGVAR  = 1,           ! Var file flag: 0 = no write, 1 = write
 
@@ -729,10 +726,7 @@
 
   $POST
     NVP = 15,
-    VP ='CO'        ,
-     	'CO_src'    ,
-     	'NO_src'    ,
-     	'tempk'     ,
+    VP ='tempk'     ,
      	'rh'	    ,
      	'rv'	    ,
      	'sea_press' , 
@@ -744,9 +738,12 @@
      	'rlongup'   ,
      	'rlong'     ,
      	'rshort'    ,
+     	'sst'       ,
+     	'smoist'    ,
+     	'vtype'     ,
  
 
-    GPREFIX = './dataout/POSPROCESS/CHEM-SMALL'
+    GPREFIX = './dataout/POSPROCESS/METEO-ONLY'
     ANL2GRA = 'ONE',
     PROJ='YES',
     MEAN_TYPE ='VMP', 
@@ -771,5 +768,5 @@
      applyMeteogram = .false.,
      meteogramFreq  = 1800.,
      meteogramMap  = './tables/meteogram/citiesBr.txt',
-     meteogramDir   = './dataout/2014012712/HST/HST2014013012'
+     meteogramDir   = '/scratchout/oper/io/BRAMS/ams_05km/dataout/2014013012/HST/HST2014013012'
    $END

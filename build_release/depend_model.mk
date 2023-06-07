@@ -16,14 +16,14 @@ ModVarfFile.o : $(FDDA)/ModVarfFile.f90\
 
 ModBuffering.o   : $(MPI)/ModBuffering.f90 ModParallelEnvironment.o
 	 @cp -f $< $(<F:.f90=.f90)
-	 $(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSF)
+	 $(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSFMPI)
 	 @rm -f $(<F:.f90=.f90)
 
 ModMessageData.o  : $(MPI)/ModMessageData.f90 \
 	ModParallelEnvironment.o ModDomainDecomp.o \
 	ModNeighbourNodes.o ModFieldSectionList.o var_tables.o
 	@cp -f $< $(<F:.f90=.f90)
-	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSF)
+	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSFMPI)
 	@rm -f $(<F:.f90=.f90)
 
 ModMessagePassing.o  : $(MPI)/ModMessagePassing.f90 \
@@ -31,7 +31,7 @@ ModMessagePassing.o  : $(MPI)/ModMessagePassing.f90 \
 	ModNeighbourNodes.o ModMessageData.o ModMessageSet.o var_tables.o \
 	ModNamelistFile.o 
 	@cp -f $< $(<F:.f90=.f90)
-	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSF)
+	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSFMPI)
 	@rm -f $(<F:.f90=.f90)
 
 ModMessageSet.o  : $(MPI)/ModMessageSet.f90 \
@@ -39,13 +39,13 @@ ModMessageSet.o  : $(MPI)/ModMessageSet.f90 \
 	ModNeighbourNodes.o ModFieldSectionList.o \
 	ModBuffering.o ModDomainDecomp.o var_tables.o parlibf.o 
 	@cp -f $< $(<F:.f90=.f90)
-	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSF)
+	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSFMPI)
 	@rm -f $(<F:.f90=.f90)
 
 ModGridDims.o  : $(MPI)/ModGridDims.f90 \
 	ModNamelistFile.o ModParallelEnvironment.o
 	@cp -f $< $(<F:.f90=.f90)
-	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSF)
+	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSFMPI)
 	@rm -f $(<F:.f90=.f90)
 
 ModGrid.o  : $(MPI)/ModGrid.f90 \
@@ -54,32 +54,32 @@ ModGrid.o  : $(MPI)/ModGrid.f90 \
 	ModNeighbourNodes.o ModMessageSet.o ModMessagePassing.o \
 	var_tables.o meteogramType.o
 	@cp -f $< $(<F:.f90=.f90)
-	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSF)
+	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSFMPI)
 	@rm -f $(<F:.f90=.f90)
 
 ModGridTree.o  : $(MPI)/ModGridTree.f90 \
 	ModNamelistFile.o ModParallelEnvironment.o \
 	ModGrid.o
 	@cp -f $< $(<F:.f90=.f90)
-	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSF)
+	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSFMPI)
 	@rm -f $(<F:.f90=.f90)
 
 ModNeighbourNodes.o  : $(MPI)/ModNeighbourNodes.f90 \
 	ModGridDims.o ModDomainDecomp.o ModParallelEnvironment.o
 	@cp -f $< $(<F:.f90=.f90)
-	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSF)
+	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSFMPI)
 	@rm -f $(<F:.f90=.f90)
 
 ModFieldSectionList.o  : $(MPI)/ModFieldSectionList.f90 \
 	var_tables.o ModParallelEnvironment.o ModDomainDecomp.o
 	@cp -f $< $(<F:.f90=.f90)
-	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSF)
+	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSFMPI)
 	@rm -f $(<F:.f90=.f90)
 
 ModDomainDecomp.o  : $(MPI)/ModDomainDecomp.f90 \
 	ModParallelEnvironment.o ModGridDims.o
 	@cp -f $< $(<F:.f90=.f90)
-	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSF)
+	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSFMPI)
 	@rm -f $(<F:.f90=.f90)
 
 #ModUkmoAdapt.o  : $(RADIATE)/ModUkmoAdapt.f90
@@ -100,7 +100,7 @@ ReadBcst.o : $(MPI)/ReadBcst.f90 mem_grid.o node_mod.o \
 	mem_leaf.o mem_oda.o memSoilMoisture.o mem_varinit.o \
 	micphys.o mem_emiss.o mem_teb_vars_const.o
 	@cp -f $< $(<F:.f90=.f90)
-	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSF)
+	$(F_COMMAND) $(<F:.f90=.f90) $(EXTRAFLAGSFMPI)
 	@rm -f $(<F:.f90=.f90) 
 
 mpi_io_engine-5d.o : $(IO)/mpi_io_engine-5d.f90

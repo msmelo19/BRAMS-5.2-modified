@@ -101,15 +101,17 @@ FPP=-fpp
 endif 
 
 ifeq ($(notdir $(FCOMP)),gfortran)
-FC_FLAGS=-O3
+FC_FLAGS=-O2
+FC_FLAGSMPI=-O0
 #FC_FLAGS=-O0 -g -fbacktrace #-fcheck=bounds -fcheck=all -finit-real=nan # -Wall -ffpe-trap=invalid,zero
-CCFLAGS=-O3
+CCFLAGS=-O2
 #CCFLAGS=-O0
 FPP=-cpp
 endif 
 
 #FCFLAGS=$(FC_FLAGS) -Wl,--no-as-needed -ldl
 FCFLAGS=$(FC_FLAGS) -ldl
+FCFLAGSMPI=$(FC_FLAGSMPI) -ldl
 
 
 LOADERFLAGS=$(FCFLAGS)
@@ -136,6 +138,7 @@ endif
 # Compiler commands.
 INCLUDES  = -I$(UTILS_INCS) $(JULES_INC) $(HDF5_INC)
 EXTRAFLAGSF = $(JULES_DEFS) $(INCLUDES) $(FCFLAGS) $(FPP)
+EXTRAFLAGSFMPI = $(JULES_DEFS) $(INCLUDES) $(FCFLAGSMPI) $(FPP)
 F_COMMAND = $(VERBOSE_FC) $(FC) -c 
 F_COMMAND_MACRO = $(F_COMMAND) -D$(AER) -D$(MATRIXLEV)
 F_COMMAND_LIGHT = $(VERBOSE_FC_LIGHT) $(FPCOMP) -c 

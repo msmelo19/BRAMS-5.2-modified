@@ -315,10 +315,18 @@ contains
        do msg = 1, Msgs%nMsgs
           call DestroyMessageData(Msgs%oneMsg(msg))
        end do
-       deallocate(Msgs%oneMsg)
-       deallocate(Msgs%request)
-       deallocate(Msgs%otherProc)
-       deallocate(Msgs)
+       if (allocated(Msgs%oneMsg)) then 
+          deallocate(Msgs%oneMsg)
+       end if
+       if (allocated(Msgs%request)) then 
+          deallocate(Msgs%request)
+       end if
+       if (allocated(Msgs%otherProc)) then 
+          deallocate(Msgs%otherProc)
+       end if
+       !if (allocated(Msgs)) then 
+          deallocate(Msgs)
+       !end if
     end if
     Msgs => null()
   end subroutine DestroyMessageSet
@@ -738,7 +746,9 @@ contains
 
           ! done with this message; deallocate buffer
 
-          deallocate(msgData%buf)
+          if (allocated(msgData%buf)) then 
+             deallocate(msgData%buf)
+          end if
        end do
     end if
 !print *,'LFR-DBG: inside WMS 4: ',size(g3d_g(1)%cugd_ttens,1), &
@@ -751,7 +761,9 @@ contains
           call parf_wait_any_nostatus(SendMsg%nMsgs, &
                SendMsg%request, sendNbr)
           msgData => SendMsg%oneMsg(sendNbr)
-          deallocate(msgData%buf)
+          if (allocated(msgData%buf)) then
+              deallocate(msgData%buf)
+          end if
        end do
     end if
 

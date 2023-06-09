@@ -1,0 +1,146 @@
+#Makefile Make_utils
+############################## Change Log ##################################
+# 1.0.0.0
+#
+# 000908 MJB Make.utils ##
+#            New methodology in rules and targets (including removal of
+#            alternate targets for IBM).
+#            Added dependencies on include and use files. ##
+#
+############################################################################
+# Define path and compilation 
+#package        = ../src/ramsmain.f90
+version        = 5.0.1
+PREFIX         = /home/rpsouto/brams/BRAMS-5.2/build_test
+FC             = @FC@
+HAVE_HDF5      = @HAVE_HDF5@
+HDF5LIB        = 
+
+CHEM	       = RELACS_TUV
+
+CCOMP	       = gcc
+CPCOMP	       = mpicc
+FCOMP	       = gfortran
+FPCOMP	       = mpif90
+
+CMACH=       PC_LINUX1
+PAR_DEFS=    -DRAMS_MPI
+
+HAVE_ZLIB      = no
+ZLIB        = 
+
+
+ZLIB_LIB =  -L$(ZLIB) -lz
+
+
+
+ARCHIVE=ar rs
+
+PAR_INCS=./
+PAR_LIBS=./
+
+include paths.mk
+
+ifndef FPCOMP
+$(error You need to set the variable FPCOMP either in configure command line)
+endif
+
+ifeq ($(notdir $(FPCOMP)),mpif90)
+FC=$(FPCOMP)
+CC=$(CPCOMP)
+
+FC_LOADER=$(FC) 
+CC_LOADER=$(CC) 
+	
+HDF5_LIB        = -L$(HDF5LIB)/lib -lhdf5hl_fortran -lhdf5_fortran -lhdf5_hl -lhdf5 $(ZLIB_LIB)
+HDF5_INC        = -I$(HDF5LIB)/include
+endif
+
+ifeq ($(notdir $(FPCOMP)),ftn)
+FC=$(FPCOMP) 
+CC=$(CPCOMP) 
+
+FC_LOADER=$(FC) 
+CC_LOADER=$(CC) 
+endif
+
+ifeq ($(notdir $(FPCOMP)),h5pfc)
+FC=$(FPCOMP) 
+CC=$(CPCOMP) 
+
+FC_LOADER=$(FC) 
+CC_LOADER=$(CC) 
+endif
+
+
+ifeq ($(notdir $(FCOMP)),pgf90)
+FCFLAGS=-fast -O3 -fastsse -Munroll=n:4 -Mipa=fast,inline,safe  -Msmart 
+CCFLAGS=-O3
+FPP=-Mpreprocess
+endif 
+
+ifeq ($(notdir $(FCOMP)),ifort)
+FC_FLAGS=-O3
+#FC_FLAGS=-O0 -g -traceback # -check all -debug all
+CCFLAGS=-O3
+#CCFLAGS=-O0
+FPP=-fpp
+endif 
+
+ifeq ($(notdir $(FCOMP)),gfortran)
+FCFLAGS=-O3 -static
+#FC_FLAGS=-O0 -g -fbacktrace #-fcheck=bounds -fcheck=all -finit-real=nan # -Wall -ffpe-trap=invalid,zero
+CCFLAGS=-O3 -DLITTLE
+#CCFLAGS=-O0
+FPP=-cpp 
+endif 
+
+
+## Define fancy Make  ###
+ifndef V
+
+	VERBOSE_CC = @printf '%b ' $(BOLD_BLUE)$(CC)$(NO_COLOUR) \
+        	                   $(BOLD)$(CCFLAGS)$(NO_COLOUR) \
+                	           $(NO_COLOUR)$?$(NO_COLOUR)    \
+        	                   $(CYAN)"=="$(NO_COLOUR)       \
+        	                   $(GREEN) $@$ $(NO_COLOUR);   \
+		                    printf '\n'; 
+
+	VERBOSE_FC = @printf '%b ' $(BOLD_BLUE)$(FC)$(NO_COLOUR) \
+	                           $(BOLD)$(FCFLAGS)$(NO_COLOUR) \
+	                           $(NO_COLOUR)$?$(NO_COLOUR)    \
+	                           $(CYAN)"=="$(NO_COLOUR)       \
+	                           $(GREEN) $@$ $(NO_COLOUR);   \
+	                           printf '\n'; 
+endif
+
+
+# Compiler commands.
+INCLUDES   = -I$(UTILS_INCS) $(HDF5_INC) -I$(PAR_INCS) 
+EXTRAFLAGSF =  $(INCLUDES)  $(PAR_DEFS) $(FCFLAGS) $(FPP)
+EXTRAFLAGSC = $(INCLUDES) $(PAR_DEFS) $(CCFLAGS)  -D$(CMACH) 
+F_COMMAND  =$(VERBOSE_FC) $(FC) -c 
+C_COMMAND  =$(VERBOSE_CC) $(CC) -c 
+
+# Define objects.
+include objects_utils.mk
+
+# Define targets.
+all:  $(LIBUTILS)
+	@echo ""
+	@echo Finished building === $(LIBUTILS)
+	@echo ""
+
+$(LIBUTILS): $(OBJ_UTILS)
+	$(ARCHIVE) $(LIBUTILS) $(OBJ_UTILS)
+
+clean:
+	@echo ""
+	rm -f $(LIBUTILS) $(OBJ_UTILS) $(MOD_UTILS)
+	@echo ""
+      
+# Define dependencies and rules
+include depend_utils.mk
+
+.PHONY: all
+

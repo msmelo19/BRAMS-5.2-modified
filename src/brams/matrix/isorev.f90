@@ -745,7 +745,7 @@ SUBROUTINE calcn2
    ! *** INITIAL VALUES FOR BISECTION ************************************
    
    x1 = psi1hi
-   y1 = funcn2 (x1)
+   y1 = funcn2 (real(x1))
    IF (y1 <= eps) RETURN   ! IF (ABS(Y1).LE.EPS .OR. Y1.LE.ZERO) RETURN
    yhi= y1                 ! Save Y-value at HI position
    
@@ -754,7 +754,7 @@ SUBROUTINE calcn2
    dx = (psi1hi-psi1lo)/FLOAT(ndiv)
    DO  i=1,ndiv
      x2 = MAX(x1-dx, zero)
-     y2 = funcn2 (x2)
+     y2 = funcn2 (real(x2))
      IF (SIGN(1.d0,y1)*SIGN(1.d0,y2) < zero) GO TO 20  ! (Y1*Y2.LT.ZERO)
      x1 = x2
      y1 = y2
@@ -770,14 +770,14 @@ SUBROUTINE calcn2
      
    ELSE IF (ylo < zero .AND. yhi < zero) THEN
      p4 = chi4
-     yy = funcn2(p4)
+     yy = funcn2(real(p4))
      GO TO 50
      
    ! *** { YLO, YHI } > 0.0 THE SOLUTION IS ALWAYS SUPERSATURATED WITH NH3
      
    ELSE IF (ylo > zero .AND. yhi > zero) THEN
      p4 = tiny
-     yy = funcn2(p4)
+     yy = funcn2(real(p4))
      GO TO 50
    ELSE
      CALL pusherr (0001, 'CALCN2')    ! WARNING ERROR: NO SOLUTION
@@ -788,7 +788,7 @@ SUBROUTINE calcn2
    
    20    DO  i=1,maxit
      x3 = 0.5*(x1+x2)
-     y3 = funcn2 (x3)
+     y3 = funcn2 (real(x3))
      IF (SIGN(1.d0,y1)*SIGN(1.d0,y3) <= zero) THEN  ! (Y1*Y3 .LE. ZERO)
        y2    = y3
        x2    = x3
@@ -803,7 +803,7 @@ SUBROUTINE calcn2
    ! *** CONVERGED ; RETURN **********************************************
    
    40    x3 = 0.5*(x1+x2)
-   y3 = funcn2 (x3)
+   y3 = funcn2 (real(x3))
    50    CONTINUE
 
 END SUBROUTINE calcn2

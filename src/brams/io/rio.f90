@@ -1168,6 +1168,8 @@ subroutine OutputFields(histFlag, instFlag, liteFlag, meanFlag)
 
   use node_mod, only: mchnum
 
+  use, intrinsic :: iso_fortran_env
+
   implicit none
   logical, intent(in) :: histFlag     ! true iff history output requested
   logical, intent(in) :: instFlag     ! true iff instant output requested
@@ -1185,6 +1187,12 @@ subroutine OutputFields(histFlag, instFlag, liteFlag, meanFlag)
   character(len=*), parameter :: h="**(OutputFields)**" 
 
   logical, external :: checkTimeIO
+
+  integer(int32) ::  startRunningTime, endRunningTime
+  integer(int64) :: countRate
+
+  call system_clock(count_rate=countRate)
+  call system_clock(count=startRunningTime)
 
   write(cProc,"(a5,i2)") " Proc",mchnum
   if (dumpLocal) then
@@ -1250,6 +1258,14 @@ subroutine OutputFields(histFlag, instFlag, liteFlag, meanFlag)
      write(c2,"(i8)") ierr
      call fatal_error(h//" deallocate Willwrite failed with stat="//&
           trim(adjustl(c2)))
+  end if
+
+  call system_clock(count=endRunningTime)
+
+  if (histFlag) then
+      write(*,*) "=============================="
+      write(*,*) "Elapsed CPU time: history file  = ", real(endRunningTime - startRunningTime) / real(countRate)
+      write(*,*) "=============================="
   end if
 
 end subroutine OutputFields

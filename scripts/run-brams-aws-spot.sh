@@ -18,7 +18,7 @@ export TMPDIR=./tmp
 
 if [ -z ${SLURM_RESTART_COUNT} ] || [ ${SLURM_RESTART_COUNT} -eq 0 ]; then
   echo "INITIAL"
-  mpirun -n ${SLURM_NTASKS} ${BRAMS_BIN} -f ${RAMSIN_INITIAL_PATH} 2>&1 | tee brams-initial-${SLURM_NTASKS}-${SLURM_JOB_ID}.out &
+  mpirun -n ${SLURM_NTASKS} ${BRAMS_BIN} -f ${RAMSIN_INITIAL_PATH} 2>&1 | tee brams-initial-${SLURM_NTASKS}-${SLURM_JOB_ID}.out
 else
   echo "HISTORY"
   ./create-ramsin-history-mode.sh ${RAMSIN_INITIAL_PATH}

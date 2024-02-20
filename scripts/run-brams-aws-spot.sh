@@ -26,12 +26,15 @@ mkdir -p ${RESULT_DIR}
 for i in $(seq 1 3); do
 	if [ -z ${SLURM_RESTART_COUNT} ] || [ ${SLURM_RESTART_COUNT} -eq 0 ]; then
 	  echo "INITIAL"
+		 date > ${LOG_DIR}/date-ini-${SLURM_JOB_ID}.txt
 	  mpirun --map-by ppr:${SLURM_NTASKS_PER_NODE}:node ${BRAMS_BIN} -f ${RAMSIN_INITIAL_PATH} 2>&1 | tee ${RESULT_DIR}/brams-initial-${SLURM_NTASKS}-${SLURM_JOB_ID}-${i}.out
 	else
 	  echo "HISTORY"
+		date > ${LOG_DIR}/date-his-${SLURM_RESTART_COUNT}-${SLURM_JOB_ID}.txt
 	  ./create-ramsin-history-mode.sh ${RAMSIN_INITIAL_PATH}
 	  mpirun --map-by ppr:${SLURM_NTASKS_PER_NODE}:node ${BRAMS_BIN} -f ${RAMSIN_INITIAL_PATH}-history 2>&1 | tee brams-history-${SLURM_NTASKS}-${SLURM_JOB_ID}-${i}-${SLURM_RESTART_COUNT}.out
 	fi
 done
 
+date > ${LOG_DIR}/date-fim-${SLURM_JOB_ID}.txt
 mv slurm-${SLURM_JOB_ID}.out ${RESULT_DIR}

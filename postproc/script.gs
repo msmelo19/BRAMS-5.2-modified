@@ -1,0 +1,5 @@
+'open METEO-ONLY-A-2015-09-01-000000-g1.ctl'
+'set gxout shaded'
+'set mpdset brmap_hires'
+'d tempk'
+'gxprint medium_size.png white'

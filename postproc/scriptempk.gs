@@ -1,8 +1,9 @@
 * gera imagem da temperatura
 'clear'
 'set mpdset brmap_hires'
-'open METEO-ONLY-A-2015-08-31-000000-g1.ctl'
-*'paletatemp.gs'
+*'open METEO-ONLY-A-2015-08-31-000000-g1.ctl'
+'open METEO-ONLY-A-2015-09-01-000000-g1.ctl'
+'paletatemp.gs'
 'BTR01.gs'
 'set gxout shaded'
 'd tempk-273'

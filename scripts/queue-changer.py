@@ -1,6 +1,7 @@
 import subprocess
 import time
 import sys
+import datetime
 
 def get_job_status(job_id: int):
     try:
@@ -30,6 +31,7 @@ def monitor_job(job_id: int, queue_name: str):
         print(f"Job {job_id} status: {job_status}")
         
         if job_status == "CG":
+            print(f'Revocation: {datetime.datetime.now()}')
             change_queue_submission(job_id, queue_name)
         elif job_status in ["NOT_FOUND", "CalledProcessError"]:
             break

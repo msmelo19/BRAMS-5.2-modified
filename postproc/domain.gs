@@ -1,0 +1,23 @@
+* gera imagem da temperatura
+'clear'
+'set mpdset brmap_hires'
+*'open METEO-ONLY-A-2015-08-31-000000-g1.ctl'
+'open METEO-ONLY-A-2015-09-01-190000-g1.ctl'
+'paletadomain.gs'
+'BTR01.gs'
+'set gxout shaded'
+'set lon -65 -28'
+'set lat -40 00'
+'d tempc'
+'set gxout contour'
+'set cint 200'
+'d tempc'
+'draw title Domain'
+*'draw string '
+*'cbarn.gs'
+*'printim METEO-ONLY-A-2015-09-01-190000-g1.png white'
+'printim brams_domain.png white'
+*'gxprint medium_size.png white'
+'set rbcols'
+
+

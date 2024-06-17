@@ -8,6 +8,7 @@
 'set rgb 47  40 130 240'
 'set rgb 48  30 110 235'
 'set rgb 49  20 100 210'
+'set rgb 50  100 100 100'
 *light yellow to dark red
 'set rgb 21 255 250 170'
 'set rgb 22 255 232 120'
@@ -18,3 +19,5 @@
 'set rgb 27 225  20   0'
 'set rgb 28 192   0   0'
 'set rgb 29 165   0   0'
+'set rgb 30 140   0   0'
+'set rgb 31 100   0   0'
